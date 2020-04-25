@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.2.5.RELEASE</version>
+		<relativePath /> <!-- lookup parent from repository -->
+	</parent>
+
+	<groupId>com.example.demo</groupId>
+	<artifactId>jkube-demo</artifactId>
+	<version>1.0.0</version>
+
+	<properties>
+		<java.version>1.8</java.version>
+		<kubernetes-maven-plugin.version>1.0.0-alpha-2</kubernetes-maven-plugin.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.junit.vintage</groupId>
+					<artifactId>junit-vintage-engine</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.jkube</groupId>
+				<artifactId>kubernetes-maven-plugin</artifactId>
+				<version>${kubernetes-maven-plugin.version}</version>
+
+				<configuration>
+					<mode>kubernetes</mode>
+					<namespace>com-example-demo-dev</namespace>
+					<verbose>true</verbose>
+
+					<generator>
+						<config>
+							<spring-boot>
+								<color>always</color>
+							</spring-boot>
+						</config>
+					</generator>
+
+					<enricher>
+						<config>
+							<jkube-controller>
+								<name>jkubedemo-1-0-dev</name>
+								<pullPolicy>Always</pullPolicy>
+							</jkube-controller>
+
+							<jkube-service>
+								<type>NodePort</type>
+							</jkube-service>
+						</config>
+					</enricher>
+
+					<images>
+						<image>
+							<name>%a:%l</name>
+							<build>
+								<dockerFile>${project.basedir}/Dockerfile</dockerFile>
+							</build>
+						</image>
+					</images>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

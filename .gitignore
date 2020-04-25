@@ -1,0 +1,17 @@
+#Eclipse
+.classpath
+.project
+.settings/
+.factorypath
+.DS_Store
+ 
+#Spring
+.springBeans
+ 
+#Maven
+target/
+ 
+.factorypath
+tokens/
+
+ml-openapi-client/generated-client

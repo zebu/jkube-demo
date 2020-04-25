@@ -1,0 +1,8 @@
+#force text files to have unix line endings
+*       text=auto
+*.java  text eol=lf
+*.xml   text eol=lf
+*.txt   text eol=lf
+*.md    text eol=lf
+.gitattributes text eol=lf
+.gitignore  text eol=lf
